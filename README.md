@@ -61,24 +61,46 @@
 # 🏗 **專案架構（Clean Architecture）**
 
 ```
-app/
+alextfliteimageclassifiercompose/
 ├── core/
-│   ├── BitmapExt.kt          # Bitmap rotateByExif, ensureArgb8888, scaleDown, Uri.toBitmap
-│   └── Utils.kt              # 其他工具函式
+│   └── Utils.kt
+│       # Uri.toBitmap、ensureArgb8888、scaleDown 等共用工具
 │
-├── features/
-│   ├── home/
-│   │   ├── HomeScreen.kt     # Compose UI 層
-│   │   ├── HomeViewModel.kt  # UI 狀態管理 + 推論觸發
-│   │   ├── HomeModule.kt     # Hilt DI bindings
-│   │   ├── CameraCapture.kt  # CameraX 拍照 + EXIF 修正
-│   │   └── ClassifyImageUseCase.kt
-│   │
-│   └── data/
-│       ├── ImageClassifierRepository.kt
-│       └── ImageClassifierRepositoryImpl.kt # TFLite Task Library 推論
+├── data/
+│   └── repository/
+│       └── ImageClassifierRepositoryImpl.kt
+│           # 使用 TFLite Task Library 做影像分類的具體實作
 │
-└── MainActivity.kt
+├── domain/
+│   ├── model/
+│   │   └── ImageLabel.kt
+│   │       # 預測結果 Domain Model（label + score）
+│   ├── repository/
+│   │   └── ImageClassifierRepository.kt
+│   │       # Domain 層介面，隔離上層與具體實作
+│   └── usecase/
+│       └── ClassifyImageUseCase.kt
+│           # 封裝「分類圖片」的 Domain 用例
+│
+├── feature/
+│   └── home/
+│       ├── component/
+│       │   └── CameraCapture.kt
+│       │       # CameraX 預覽 + 拍照 + EXIF 修正
+│       ├── di/
+│       │   └── HomeModule.kt
+│       │       # Hilt DI：提供 Home 所需的 Repository / UseCase 綁定
+│       ├── HomeScreen.kt
+│       │   # Home 畫面 Compose UI（圖片預覽 + 分類結果 + Floating Toolbar）
+│       └── HomeViewModel.kt
+│           # UI 狀態管理，呼叫 ClassifyImageUseCase 進行推論
+│
+└── ui/
+    ├── App.kt
+    │   # App 入口，設定 Compose Nav / 主題（如有）
+    └── MainActivity.kt
+        # Single-Activity，掛載 Compose App()
+
 ```
 
 ---
