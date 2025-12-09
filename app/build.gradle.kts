@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+//    implementation(libs.androidx.material3)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -73,9 +74,18 @@ dependencies {
     // Kotlinx Serialization
     implementation(libs.kotlinx.serialization.json)
 
+    // Icons
+    implementation(libs.androidx.compose.material.icons.extended)
+
     // TFLite Core
     implementation("org.tensorflow:tensorflow-lite:2.13.0")
 
     // TFLite Task Vision
     implementation("org.tensorflow:tensorflow-lite-task-vision:0.4.4")
+
+    // CameraX
+    implementation("androidx.camera:camera-core:1.5.2")
+    implementation("androidx.camera:camera-camera2:1.5.2")
+    implementation("androidx.camera:camera-lifecycle:1.5.2")
+    implementation("androidx.camera:camera-view:1.5.2")
 }
